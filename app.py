@@ -10,21 +10,17 @@ import os
 #################################################
 app = Flask(__name__)
 
+import urlparse
+
 print(os.environ.get("DATABASE_URL"))
 
+
 if "DATABASE_URL" in os.environ :
-    import urlparse # for python 3+ use: from urllib.parse import urlparse
-    result = urlparse.urlparse(os.environ.get("DATABASE_URL"))
-    # also in python 3+ use: urlparse("YourUrl") not urlparse.urlparse("YourUrl") 
-    username = result.username
-    password = result.password
-    database = result.path[1:]
-    hostname = result.hostname
-    conn = psycopg2.connect(
-    database = database,
-    user = username,
-    password = password,
-    host = hostname )
+    url = urlparse.urlparse(os.environ.get('DATABASE_URL'))
+    db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
+    schema = "schema.sql"
+    conn = psycopg2.connect(db)
+    #cur = conn.cursor()
 else: 
     conn = psycopg2.connect(host="localhost", port = 5432, database="Minneapolis_Police_Force_db")
 
