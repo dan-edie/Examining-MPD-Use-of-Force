@@ -35,7 +35,7 @@ def echo():
 
 @app.route("/api/geojson")
 def welcome():
-    cur.execute("select * from vw_police_use_of_force limit 5") 
+    cur.execute("select * from vw_police_use_of_force") 
     columns = [col[0] for col in cur.description]
     use_of_force = [dict(zip(columns, row)) for row in cur.fetchall()]
     return jsonify(use_of_force)

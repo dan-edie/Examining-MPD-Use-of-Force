@@ -1,11 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My App</title>
+  <meta charset="UTF-8">
+  <title>MLS Crime</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!--link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/journal/bootstrap.min.css" rel="stylesheet" integrity="sha384-vjBZc/DqIqR687k5rf6bUQ6IVSOxQUi9TcwtvULstA7+YGi//g3oT2qkh8W1Drx9" crossorigin="anonymous"-->
 </head>
 <body>
-    <h1>Hello World!</h1>
+
+  <!--Adding Nav Bar-->
+  <!--Adding Latitude as Home screen link-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbarmar">
+    <a class="navbar-brand" href="index.html" ><div class="p-2  bg-info text-white">M</div></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!--Adding other nav bar menus-->
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class = "navbar-nav ml-auto navbar-right">
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="Plots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Geo Map
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <a class="dropdown-item" href="Temperature.html">Max Temp</a>
+                      <a class="dropdown-item" href="Humidity.html">Humidity</a>
+                      <a class="dropdown-item" href="Cloudiness.html">Cloudiness</a>
+                      <a class="dropdown-item" href="Wind.html">Wind Speed</a>
+                      <a class="dropdown-item" href="Temperature-NH.html">Max Temp (NH)</a>
+                      <a class="dropdown-item" href="Temperature-SH.html">Max Temp (SH)</a>
+                  </div>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="Comparison.html">Comparison</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="Data.html">Data</a>
+              </li>
+        </ul>
+      </div>
+  </nav>
+  <!--End of Nav Bar-->
+
+  <!--Adding cointainer for Data & Visualization-->
+  <div class="container-fluid  p-5"  >
+    <div class="row" class="mx-auto">
+
+      <!--First Column in this Row-->
+      <div class="col-md-8 mb-3">
+        <div class="box div-box">       
+        <h4 class="text-info font-weight-bold">Analysis of Crime and Police Use of Force in Minneapolis</h4>
+        <hr class="my-4">        
+          <div>
+            <iframe width='100%' height='520' frameborder='0' src='https://samswey.carto.com/viz/e1005588-93d2-47b6-9a61-f4c0ed001163/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+            
+            <!--p><img src="Resources\assets\visualizations\1-City_Lat-v-Max_Temp.png" 
+            style="margin: 0px 3%" class="one img-thumbnail rounded float-left img-fluid"></p-->      
+            <p class="card-text text-justify" style="padding-left: 2%;">
+              For 8 minutes and 46 seconds, Derek Chauvin pressed his knee into the neck of George Floyd, an 
+              use of force by the now-former Minneapolis police officer has reinvigorated a very public debate 
+              about police brutality and racism.</p>
+            
+            <p class="card-text text-justify" style="padding-left: 2%;">In this project, we are analysisng crime rates in Minneapolis neighborhoods,
+            use of force and how it is impacted by race and household income of a neighborhood.</p>
+          </div> 
+        
+        <!--End of first box-->
+        </div>
+
+      <!--End of first column-->
+      </div> 
+
+    <!--Second Column in this Row-->
+      <div class="col-md-4">
+        <div class="box div-box">  
+        <h4 class="text-info font-weight-bold"><i class='fas fa-chart-line' style='color:#00acc1'></i> Visualizations</h4>
+        <hr class="my-4">    
+          <div class="row" class="mx-auto" >
+            <div class="col-lg-6 col-md-6 col-sm-2 col-xs-2">
+              <div class="container-fluid p-1" >
+                <a href="Temperature.html" class="imageFocus" onclick="this.focus()">
+                <img class="card-img-bottom zoom" src="Resources\assets\visualizations\1-City_Lat-v-Max_Temp.png" style='width:100%;' alt="Lat vs Max Temp Graph">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-2 col-xs-2">
+              <div class="container-fluid p-1" >
+                <a href="Humidity.html" class="imageFocus" onclick="this.focus()">
+                <img class="card-img-top zoom" src="Resources\assets\visualizations\2-City_Lat-v-Humidity.png" style='width:100%;' alt="Lat vs Humidity Graph">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-2 col-xs-2">
+              <div class="container-fluid p-1" >
+                <a href="Cloudiness.html" class="imageFocus" onclick="this.focus()">
+                <img class="card-img-top zoom" src="Resources\assets\visualizations\3-City_Lat-v-Cloudiness.png" style='width:100%;' alt="Lat vs Cloudiness Graph">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-2 col-xs-2">
+              <div class="container-fluid p-1" >
+                <a href="Wind.html" class="imageFocus" onclick="this.focus()">
+                <img class="card-img-top zoom" src="Resources\assets\visualizations\4-City_Lat-v-Wind_Speed.png" style='width:100%;' alt="Lat vs Wind Speed Graph">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-2 col-xs-2">
+              <div class="container-fluid p-1" >
+                <a href="Temperature-NH.html" class="imageFocus" onclick="this.focus()">
+                <img class="card-img-top zoom" src="Resources\assets\visualizations\5-Northern_City_Lat-v-Max_Temp.png" style='width:100%;' alt="Lat vs Cloudiness Graph">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-2 col-xs-2">
+              <div class="container-fluid p-1" >
+                <a href="Temperature-SH.html" class="imageFocus" onclick="this.focus()">
+                <img class="card-img-top zoom" src="Resources\assets\visualizations\6-Southern_City_Lat-v-Max_Temp.png" style='width:100%;' alt="Lat vs Wind Speed Graph">
+              </div>
+            </div>
+          </div>
+        
+        <!--End of second box-->
+        </div>
+      <!--End of second column--> 
+      </div>
+    
+    <!--End of row-->
+    </div>
+  
+  <!--End of container-->
+  </div>
+
+ <!-- Footer -->
+
+  <div class="panel-footer panel-custom bg-dark py-2 text-center">
+    © Copyright Coding BootCamp 2020
+  </div>
+
+  <!-- End of Footer -->
+
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 </body>
+
 </html>
