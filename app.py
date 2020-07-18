@@ -16,7 +16,7 @@ print(os.environ.get("DATABASE_URL"))
 
 
 if "DATABASE_URL" in os.environ :
-    url = urlparse.urlparse(os.environ.get('DATABASE_URL'))
+    url = urlparse(os.environ.get('DATABASE_URL'))
     db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
     schema = "schema.sql"
     conn = psycopg2.connect(db)
