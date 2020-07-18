@@ -15,6 +15,8 @@ from urllib.parse import urlparse
 print(os.environ.get("DATABASE_URL"))
 
 
+os.environ["DATABASE_URL"] = "postgres://uphrhjjikbnoqu:4a3e5c8de842450307f62b684c62f93dee4a5a0146c62eac579ff887884a979c@ec2-54-159-138-67.compute-1.amazonaws.com:5432/d3vhg0ri9rvco2"
+
 if "DATABASE_URL" in os.environ :
     url = urlparse(os.environ.get('DATABASE_URL'))
     db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
