@@ -10,6 +10,8 @@ import os
 #################################################
 app = Flask(__name__)
 
+print(os.environ.get("DATABASE_URL"))
+
 if "DATABASE_URL" in os.environ :
     import urlparse # for python 3+ use: from urllib.parse import urlparse
     result = urlparse.urlparse(os.environ.get("DATABASE_URL"))
