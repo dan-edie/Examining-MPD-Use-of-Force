@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template
 import sqlalchemy
 import psycopg2
 from sqlalchemy import create_engine
+import json
 #from flask_sqlalchemy import SQLAlchemy
 import os
 #################################################
@@ -26,13 +27,18 @@ cur = conn.cursor()
 #################################################
 #pd.read_sql
 
-
 @app.route("/")
+def echo():
+    
+    return render_template("index.html")
+
+
+@app.route("/api/geojson")
 def welcome():
-    cur.execute("select * from vw_police_use_of_force;")
-    nhbd = cur.fetchall()
-    
-    return jsonify(nhbd)
-    
+    cur.execute("select * from vw_police_use_of_force limit 5") 
+    columns = [col[0] for col in cur.description]
+    use_of_force = [dict(zip(columns, row)) for row in cur.fetchall()]
+    return jsonify(use_of_force)
+
 if __name__ == "__main__":
     app.run(debug=True)
