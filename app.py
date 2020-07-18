@@ -9,11 +9,15 @@ import os
 #################################################
 app = Flask(__name__)
 
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") or 'postgres://swain:db@localhost/Minneapolis_Police_Force_db'
+#print(app.config['SQLALCHEMY_DATABASE_URI'])
+
 #engine = create_engine(f'postgresql://swain:db@localhost:5432/Minneapolis_Police_Force_db')
 #connection = engine.connect()
 # Create a cursor object
-conn = psycopg2.connect(host="localhost", port = 5432, database="Minneapolis_Police_Force_db")
+conn = os.environ.get("DATABASE_URL") or psycopg2.connect(host="localhost", port = 5432, database="Minneapolis_Police_Force_db")
 
+print(conn)
 
 cur = conn.cursor()
 # engine = psycopg2.connect("postgresql://postgres:postgres@localhost:52632/mydatabase", echo=False)
@@ -27,7 +31,8 @@ cur = conn.cursor()
 def welcome():
     cur.execute("select * from vw_police_use_of_force;")
     nhbd = cur.fetchall()
+    
     return jsonify(nhbd)
-    #return "Hello World"
+    
 if __name__ == "__main__":
     app.run(debug=True)
