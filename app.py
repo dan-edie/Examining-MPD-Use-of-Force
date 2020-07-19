@@ -48,6 +48,15 @@ def echo():
     
     return render_template("index.html")
 
+@app.route("/map")
+def map_view():
+
+    return render_template("map.html")
+
+@app.route("/neighborhoods")
+def neighborhood_view():
+
+    return render_template("neighborhood.html")
 
 @app.route("/api/geojson")
 def welcome():
