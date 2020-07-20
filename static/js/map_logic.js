@@ -1,9 +1,9 @@
 // Paths to the geoJSON files
-let minNbrhoods = "../static/js/Minneapolis_Neighborhoods.geojson";
-let minPolPrec = "../static/js/Minneapolis_Police_Precincts.geojson";
-let minCommunities = "../static/js/Communities.geojson";
-// let forceData = "../static/js/forceData.json";
-let forceData = '/api/geojson'; //ignore the name before the blah.com/api/geojson
+let minNbrhoods = "../static/data/Minneapolis_Neighborhoods.geojson";
+let minPolPrec = "../static/data/Minneapolis_Police_Precincts.geojson";
+let minCommunities = "../static/data/Communities.geojson";
+// Path to data
+let forceData = '/api/geojson';
 
 // Perform a GET on the Minneapolis Neighborhoods Data
 d3.json(minNbrhoods, function (data) {
@@ -19,7 +19,6 @@ d3.json(minNbrhoods, function (data) {
 
 // Building the layers of the map
 function createFeatures(neighborhoods, policePrecints, communities) {
-
   // Create a GeoJSON layer for the neighborhood boundaries
   let minNeighborhoods = L.geoJSON(neighborhoods, {
     onEachFeature: function (feature, layer) {
@@ -29,7 +28,8 @@ function createFeatures(neighborhoods, policePrecints, communities) {
         return L.polyline (feature.geometry.coordinates)
     },
     style: {
-      color: "blue",
+      color: "black",
+      fillColor: "indigo",
       weight: 2,
       opacity: 1,
       fillOpacity: 0.5
@@ -45,6 +45,7 @@ function createFeatures(neighborhoods, policePrecints, communities) {
     },
     style: {
       color: 'red',
+      fillColor: "orange",
       weight: 2,
       opacity: 0.5,
       fillOpacity: 0.3
@@ -60,6 +61,7 @@ function createFeatures(neighborhoods, policePrecints, communities) {
     },
     style: {
       color: "green",
+      fillColor: "grey",
       weight: 2,
       opacity: 1,
       fillOpacity: 0.5
@@ -72,7 +74,6 @@ function createFeatures(neighborhoods, policePrecints, communities) {
 
 // Build the map
 function createMap(neighborhoods, policePrecints, communities) {
-
   // Adding tile layer
   let streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
@@ -99,18 +100,19 @@ function createMap(neighborhoods, policePrecints, communities) {
   let myMap = L.map("map", {
     center: [44.96, -93.28],
     zoom: 11.45,
-    layers: [streetmap, communities]
+    layers: [streetmap, neighborhoods]
   });
 
   // Create the markers for Police incidents
   d3.json(forceData, function (forcedata) {
-    console.log(forcedata);
     // Create a markers cluster group
     let markers = L.markerClusterGroup();
-
+//severity_of_resistance
     forcedata.forEach(function (incident) {
-      markers.addLayer(L.marker([incident.lat, incident.long])
-        .bindPopup(incident.police_use_of_force_type));
+      markers.addLayer(L.marker([parseFloat(incident.lat), parseFloat(incident.long)])
+        .bindPopup(`<h3> Date of Incident: ${incident.response_date} </h3>
+        <h3> Use of Force Type:? ${incident.police_use_of_force_type} </h3>
+        <hr> <h3> Subject Race: ${incident.subject_race} </h3>`));
     })
   // Add our marker cluster layer to the map
   myMap.addLayer(markers);
@@ -123,28 +125,4 @@ function createMap(neighborhoods, policePrecints, communities) {
     collapsed: false
 }).addTo(myMap);
 };
-
-/*
-	1.) Geo Map: 
-			Default at the overall Minneapolis
-				Filterable w/a click Minneapolis -> Community -> Neighborhood
-			Metric: 
-				Police Incidents
-				Dynamic parameter metric to swap to view Use of Force
-			Attributes:
-				Size: # of Incidents
-				Color: Severity
-			Filter: Crime Type, Income, Time, Race, Neighborhood, Precinct, Community, Year
-      *Add time warp view
-
-  	1.) Geo Map: 
-			Default at the Neighborhood (You have to select a Neighborhood to populate data (defaults to blank))
-			Metric: 
-				Police Incidents
-				Dynamic parameter metric to swap to view Use of Force
-			Attributes:
-				Size: # of Incidents
-				Color: Severity
-			Filter: Crime Type, Income, Time, Race, Neighborhood, Precinct, Community, Year
-*/
   
