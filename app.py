@@ -56,7 +56,7 @@ def map_view():
 @app.route("/neighborhoods")
 def neighborhood_view():
 
-    return render_template("neighborhood.html")
+    return render_template("neighbor_incidents.html")
 
 @app.route("/api/geojson")
 def welcome():

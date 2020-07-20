@@ -111,7 +111,7 @@ function createMap(neighborhoods, policePrecints, communities) {
     forcedata.forEach(function (incident) {
       markers.addLayer(L.marker([parseFloat(incident.lat), parseFloat(incident.long)])
         .bindPopup(`<h3> Date of Incident: ${incident.response_date} </h3>
-        <h3> Use of Force Type: ${incident.police_use_of_force_type} </h3>
+        <h3> Use of Force Type:? ${incident.police_use_of_force_type} </h3>
         <hr> <h3> Subject Race: ${incident.subject_race} </h3>`));
     })
   // Add our marker cluster layer to the map
