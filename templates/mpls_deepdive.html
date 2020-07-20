@@ -45,21 +45,32 @@
       <!--First Column in this Row-->
       <div class="col-md-9 mb-3">
         <div class="box div-box">       
-        <h4 class="text-info font-weight-bold">Analysis of Police Use of Force in Minneapolis</h4>
+        <h4 class="text-info font-weight-bold">Deep dive into Police Use of Force in Minneapolis</h4>
         <hr class="my-4">        
-          <div>
-            <iframe width='100%' height='520' frameborder='0' src='https://samswey.carto.com/viz/e1005588-93d2-47b6-9a61-f4c0ed001163/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-            
-            <!--p><img src="Resources\assets\visualizations\1-City_Lat-v-Max_Temp.png" 
-            style="margin: 0px 3%" class="one img-thumbnail rounded float-left img-fluid"></p-->      
-            <p class="card-text text-justify" style="padding-left: 2%;">
-              For 8 minutes and 46 seconds, Derek Chauvin pressed his knee into the neck of George Floyd, an 
-              use of force by the now-former Minneapolis police officer has reinvigorated a very public debate 
-              about police brutality and racism.</p>
-            
-            <p class="card-text text-justify" style="padding-left: 2%;">In this project, we are analysisng crime rates in Minneapolis neighborhoods,
-            use of force and how it is impacted by race and household income of a neighborhood.</p>
-          </div> 
+          
+        
+        <div class="row">
+          <div class="col-md-12">
+            <!-- map div -->
+          <div id="map-neighborhood"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <!-- table div -->
+          <div id="scatter"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <!-- table div -->
+          <div id="table-neighborhood"></div>
+          </div>
+        </div>
+
+
         
         <!--End of first box-->
         </div>
@@ -112,6 +123,7 @@
   <!-- End of Footer -->
 
 <!--script src="../static/js/neighborhood-force.js"></script-->
+<script src="../static/js/nbh-bubble.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

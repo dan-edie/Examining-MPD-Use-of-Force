@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <meta charset="UTF-8">
-    <title>Project Two</title>
+
+  <meta charset="UTF-8">
+  <title>MPLS Use of Force</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
@@ -21,9 +26,43 @@
 
   </head>
   <body>
+    <!--Adding Nav Bar-->
+  <!--Adding Latitude as Home screen link-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbarmar">
+    <a class="navbar-brand" href="/" ><div class="p-2  bg-info text-white">MINP</div></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!--Adding other nav bar menus-->
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class = "navbar-nav ml-auto navbar-right">
+              
+              <li class="nav-item">
+                <a class="nav-link" href="/geojson">MPLS Geo Map</a>
+            </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/mpls_deepdive">MPLS Deep Dive</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="Inference.html">Inference</a>
+              </li>
+        </ul>
+      </div>
+  </nav>
+  <!--End of Nav Bar-->
 
     <!-- map div -->
     <div id="map"></div>
+
+    <!-- Footer -->
+
+  <div class="panel-footer panel-custom bg-dark py-2 text-center">
+    © Copyright Coding BootCamp 2020
+  </div>
+
+  <!-- End of Footer -->
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"

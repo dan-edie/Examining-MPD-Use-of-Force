@@ -43,7 +43,7 @@
     <div class="row" class="mx-auto">
 
       <!--First Column in this Row-->
-      <div class="col-md-9 mb-3">
+      <div class="col-md-12">
         <div class="box div-box">       
         <h4 class="text-info font-weight-bold">Analysis of Police Use of Force in Minneapolis</h4>
         <hr class="my-4">        
@@ -65,35 +65,6 @@
         </div>
 
       <!--End of first column-->
-      </div> 
-
-    <!--Second Column in this Row-->
-    
-
-     <!--Create a dropdown menu for user to select a neighborhood & return form input to the app-->
-     <div class="col-md-3">
-        <div class="box div-box">  
-        <h5 class="text-info font-weight-bold">Use of Force in your Neighborhood</h5>
-        <hr class="my-4">    
-          <div class="row" class="mx-auto" >
-           
-          <form name="neighborhood" action="/" method="POST">
-
-            <select name="neighborhood" method="GET" action="/" style="margin-left: 30%">
-              <option value="{{neighborhood[0].name}}" selected>{{neighborhood[0].name}}</option>
-              {% for n in neighborhood[1:]: %}
-                <option value="{{n.name}}">{{n.name}}</option>
-              {% endfor %}
-
-            </select>
-            <br><br>
-            <p id="submission"><button type="Submit" style="margin-left: 60%">Search</button></p>
-            </form>
-
-            </div> 
-        <!--End of second box-->
-        </div>
-      <!--End of second column--> 
       </div> 
 
     

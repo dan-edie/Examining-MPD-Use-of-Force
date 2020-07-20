@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request, redirect, json
 import sqlalchemy
 import psycopg2
 from sqlalchemy import create_engine
@@ -43,10 +43,22 @@ cur = conn.cursor()
 #################################################
 #pd.read_sql
 
-@app.route("/")
+#Fetch all neighborhood names 
+cur.execute("SELECT name FROM neighborhood where neighborhood_id in (select distinct neighborhood_id from vw_police_use_of_force) and neighborhood_id in (select distinct neighborhood_id from race_by_neighborhood) and neighborhood_id in (select distinct neighborhood_id from household_income_by_neighborhood) ORDER BY name;")
+
+#Convert list of neighborhood names to a dixtionary
+columns = [col[0] for col in cur.description]
+neighborhood = [dict(zip(columns, row)) for row in cur.fetchall()]
+
+@app.route("/", methods=['GET', 'POST'])
 def echo():
     
-    return render_template("index.html")
+    #reroute to new neighborhood url based on form input from user
+    if request.method == 'POST':
+        newNeighborhood = request.form['neighborhood']
+        return redirect("/" + newNeighborhood)
+
+    return render_template("index.html", neighborhood=neighborhood)
 
 
 @app.route("/api/geojson")
@@ -54,7 +66,66 @@ def welcome():
     cur.execute("select * from vw_police_use_of_force") 
     columns = [col[0] for col in cur.description]
     use_of_force = [dict(zip(columns, row)) for row in cur.fetchall()]
-    return jsonify(use_of_force)
+    return jsonify(use_of_force) 
+
+    
+
+@app.route("/api/nbh_bubble")
+def nbh_bubble():
+    cur.execute("select * from force_nbh_stats") 
+    columns = [col[0] for col in cur.description]
+    nbh_stats = [dict(zip(columns, row)) for row in cur.fetchall()]
+    return jsonify(nbh_stats) 
+
+@app.route("/geojson")
+def mpls_geojson():
+    
+    return render_template("map.html")
+
+@app.route("/mpls_deepdive", methods=['GET', 'POST'])
+def mpls_deepdive():
+
+    #reroute to new neighborhood url based on form input from user
+    if request.method == 'POST':
+        newNeighborhood = request.form['neighborhood']
+        return redirect("/" + newNeighborhood)
+    
+    return render_template("mpls_deepdive.html", neighborhood=neighborhood)
+
+@app.route("/inference")
+def inference():
+    
+    return render_template("Inference.html")
+
+# Add a new route to display stats for dynamically seleted neighborhood
+@app.route("/<neighborhood>")
+def neighborhood_data(neighborhood):
+
+    #Column names for table in neighborhood page
+    #columns_data = ['Year', 'Police Incidents Count', 'Use of Force Cases', '% White Use of Force', '% Of Color Use of Force', '% White (Demographics)'
+               # ,'% Of Color (Demographics)', 'Median Household Income','Income Group']
+
+    #Query table in neighborhood page
+    cur.execute("select * from police_use_of_force WHERE neighborhood =  %s;", ((neighborhood),))
+    columns = [col[0] for col in cur.description]
+    nhbd_dict = [dict(zip(columns, row)) for row in cur.fetchall()]
+    neighborhood_use_of_force = json.dumps(nhbd_dict,default=str)
+    
+    #income data
+    cur.execute("select * from vw_neighborhood_income WHERE name =  %s;", ((neighborhood),))
+    columns_n = [col[0] for col in cur.description]
+    income_dict = [dict(zip(columns_n, row)) for row in cur.fetchall()]
+    income = json.dumps(income_dict,default=str)
+
+    #demographics
+    cur.execute("select * from vw_neighborhood_demographics WHERE name =  %s;", ((neighborhood),))
+    columns_m = [col[0] for col in cur.description]
+    demographics_dict = [dict(zip(columns_m, row)) for row in cur.fetchall()]
+    demographics = json.dumps(demographics_dict,default=str)
+   
+ 
+    return render_template("neighborhood.html", neighborhood_use_of_force=neighborhood_use_of_force,  nbr=neighborhood, income=income, demographics=demographics ) 
+
 
 if __name__ == "__main__":
     app.run(debug=True)

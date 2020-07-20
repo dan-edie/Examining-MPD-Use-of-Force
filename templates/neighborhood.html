@@ -2,16 +2,34 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
   <title>MPLS Use of Force</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="../static/css/style.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <!--link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/journal/bootstrap.min.css" rel="stylesheet" integrity="sha384-vjBZc/DqIqR687k5rf6bUQ6IVSOxQUi9TcwtvULstA7+YGi//g3oT2qkh8W1Drx9" crossorigin="anonymous"-->
-</head>
-<body>
 
-  <!--Adding Nav Bar-->
+  
+</head>
+
+<body>
+  {% block content %}
+  {% block javascript %}
+	<script>
+  // load the objects like you would with a normal jinja template i.e. {{ object }}, but add | tojson
+  // pass it into the parse function
+  neighborhood_use_of_force = JSON.parse({{ neighborhood_use_of_force | tojson }})
+  income = JSON.parse({{ income | tojson }})
+  demographics = JSON.parse({{ demographics | tojson }})
+
+  //console.log(labels)
+
+    </script>
+
+{% endblock %}
+{% endblock %}
+
+<!--Adding Nav Bar-->
   <!--Adding Latitude as Home screen link-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbarmar">
     <a class="navbar-brand" href="/" ><div class="p-2  bg-info text-white">MINP</div></a>
@@ -31,7 +49,7 @@
                   <a class="nav-link" href="/mpls_deepdive">MPLS Deep Dive</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="/inference">Inference</a>
+                  <a class="nav-link" href="Inference.html">Inference</a>
               </li>
         </ul>
       </div>
@@ -43,23 +61,45 @@
     <div class="row" class="mx-auto">
 
       <!--First Column in this Row-->
-      <div class="col-md-9 mb-3">
+      <div class="col-md-12">
         <div class="box div-box">       
-        <h4 class="text-info font-weight-bold">Analysis of Police Use of Force in Minneapolis</h4>
-        <hr class="my-4">        
-          <div>
-            <iframe width='100%' height='520' frameborder='0' src='https://samswey.carto.com/viz/e1005588-93d2-47b6-9a61-f4c0ed001163/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+        <h4 class="text-info font-weight-bold">Analysis of Police Use of Force in {{nbr}}</h4>
+        <hr class="my-4"> 
+        
+        <div class="row">
+          <div class="col-md-2">            
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Demographic & Household Income Info</h3>
+              </div>
+              <div id="sample-metadata" class="panel-body"></div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div id="bar"></div>
+          </div>
+          <div class="col-md-5">
+            <div id="pie"></div>
+          </div>
+        </div>
+          
+
+            <div class="row">
+              <div class="col-md-12">
+                <!-- map div -->
+              <div id="map-neighborhood"></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <!-- table div -->
+              <div id="table-neighborhood"></div>
+              </div>
+            </div>
             
-            <!--p><img src="Resources\assets\visualizations\1-City_Lat-v-Max_Temp.png" 
-            style="margin: 0px 3%" class="one img-thumbnail rounded float-left img-fluid"></p-->      
-            <p class="card-text text-justify" style="padding-left: 2%;">
-              For 8 minutes and 46 seconds, Derek Chauvin pressed his knee into the neck of George Floyd, an 
-              use of force by the now-former Minneapolis police officer has reinvigorated a very public debate 
-              about police brutality and racism.</p>
-            
-            <p class="card-text text-justify" style="padding-left: 2%;">In this project, we are analysisng crime rates in Minneapolis neighborhoods,
-            use of force and how it is impacted by race and household income of a neighborhood.</p>
-          </div> 
+        
+           
         
         <!--End of first box-->
         </div>
@@ -67,36 +107,7 @@
       <!--End of first column-->
       </div> 
 
-    <!--Second Column in this Row-->
-    
-
-     <!--Create a dropdown menu for user to select a neighborhood & return form input to the app-->
-     <div class="col-md-3">
-        <div class="box div-box">  
-        <h5 class="text-info font-weight-bold">Use of Force in your Neighborhood</h5>
-        <hr class="my-4">    
-          <div class="row" class="mx-auto" >
-           
-          <form name="neighborhood" action="/" method="POST">
-
-            <select name="neighborhood" method="GET" action="/" style="margin-left: 30%">
-              <option value="{{neighborhood[0].name}}" selected>{{neighborhood[0].name}}</option>
-              {% for n in neighborhood[1:]: %}
-                <option value="{{n.name}}">{{n.name}}</option>
-              {% endfor %}
-
-            </select>
-            <br><br>
-            <p id="submission"><button type="Submit" style="margin-left: 60%">Search</button></p>
-            </form>
-
-            </div> 
-        <!--End of second box-->
-        </div>
-      <!--End of second column--> 
-      </div> 
-
-    
+   
     <!--End of row-->
     </div>
   
@@ -111,13 +122,14 @@
 
   <!-- End of Footer -->
 
-<!--script src="../static/js/neighborhood-force.js"></script-->
+
+<script src="../static/js/neighborhood-force.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
-
 </body>
 
 </html>
+
