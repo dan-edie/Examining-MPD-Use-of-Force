@@ -60,15 +60,12 @@ def echo():
 
     return render_template("index.html", neighborhood=neighborhood)
 
-@app.route("/map")
-def map_view():
 
-    return render_template("map.html")
 
-@app.route("/neighborhoods")
-def neighborhood_view():
+#@app.route("/neighborhoods")
+#def neighborhood_view():
 
-    return render_template("neighbor_incidents.html")
+    #return render_template("neighbor_incidents.html")
 
 @app.route("/api/geojson")
 def welcome():

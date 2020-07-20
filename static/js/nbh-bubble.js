@@ -199,7 +199,7 @@ function updateToolTip(chosenXAxis,chosenYAxis, circlesGroup) {
 }
 
 // Retrieve data from the CSV file and execute everything below
-d3.csv("data.csv").then(function(data, err) {
+d3.json('/api/nbh_bubble').then(function(data, err) {
   if (err) throw err;
 
   // parse data and convert strint to int
